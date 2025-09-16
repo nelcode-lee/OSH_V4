@@ -60,7 +60,8 @@
     "zustand": "4.4.7",
     "openai": "^4.20.1",
     "pdf-parse": "^1.1.1",
-    "mammoth": "^1.6.0"
+    "mammoth": "^1.6.0",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

@@ -1,4 +1,13 @@
-// Simple API for demo purposes
+// API with Neon DB integration
+const dbService = require('./db-service');
+
+// Initialize database connection
+let dbInitialized = false;
+dbService.initializeDatabase().then(initialized => {
+  dbInitialized = initialized;
+  console.log('Database initialized:', initialized);
+});
+
 export default function handler(req, res) {
   // Get OpenAI API key from environment
   const openaiApiKey = process.env.OPENAI_API_KEY;
@@ -97,45 +106,56 @@ export default function handler(req, res) {
     }
   }
 
-  // Mock courses data
-  if ((pathname === '/api/courses/' || pathname === '/api/courses') && req.method === 'GET') {
-    return res.status(200).json([
-      {
-        id: 1,
-        title: "Plant Training & Testing",
-        description: "CPCS and NPORS plant training and technical tests for excavator, roller, dumpers, dozer, telehandler and wheeled loading shovels.",
-        category: "Plant Training",
-        duration: "1-5 Days",
-        rating: 4.9,
-        students_trained: 2500,
-        duration_hours: 40,
-        difficulty_level: "Intermediate",
-        progress_percentage: 0,
-        enrolled_at: new Date().toISOString(),
-        status: "available",
-        student_count: 15,
-        content_count: 8,
-        created_at: new Date().toISOString()
-      },
-      {
-        id: 2,
-        title: "Health & Safety Short Course",
-        description: "Designed to keep people safe on site, covering topics including the people plant interface.",
-        category: "Health & Safety",
-        duration: "1 Day",
-        rating: 4.8,
-        students_trained: 3200,
-        duration_hours: 8,
-        difficulty_level: "Beginner",
-        progress_percentage: 0,
-        enrolled_at: new Date().toISOString(),
-        status: "available",
-        student_count: 12,
-        content_count: 5,
-        created_at: new Date().toISOString()
+    // Courses data - try database first, fallback to mock
+    if ((pathname === '/api/courses/' || pathname === '/api/courses') && req.method === 'GET') {
+      try {
+        if (dbInitialized) {
+          const courses = await dbService.getCourses();
+          return res.status(200).json(courses);
+        } else {
+          // Fallback to mock data
+          return res.status(200).json([
+            {
+              id: 1,
+              title: "Plant Training & Testing",
+              description: "CPCS and NPORS plant training and technical tests for excavator, roller, dumpers, dozer, telehandler and wheeled loading shovels.",
+              category: "Plant Training",
+              duration: "1-5 Days",
+              rating: 4.9,
+              students_trained: 2500,
+              duration_hours: 40,
+              difficulty_level: "Intermediate",
+              progress_percentage: 0,
+              enrolled_at: new Date().toISOString(),
+              status: "available",
+              student_count: 15,
+              content_count: 8,
+              created_at: new Date().toISOString()
+            },
+            {
+              id: 2,
+              title: "Health & Safety Short Course",
+              description: "Designed to keep people safe on site, covering topics including the people plant interface.",
+              category: "Health & Safety",
+              duration: "1 Day",
+              rating: 4.8,
+              students_trained: 3200,
+              duration_hours: 8,
+              difficulty_level: "Beginner",
+              progress_percentage: 0,
+              enrolled_at: new Date().toISOString(),
+              status: "available",
+              student_count: 12,
+              content_count: 5,
+              created_at: new Date().toISOString()
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+        return res.status(500).json({ error: 'Failed to fetch courses' });
       }
-    ])
-  }
+    }
 
   // Mock instructor dashboard
   if (pathname === '/api/courses/instructor-dashboard' && req.method === 'GET') {

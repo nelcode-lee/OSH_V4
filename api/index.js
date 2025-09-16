@@ -106,7 +106,12 @@ export default function handler(req, res) {
         duration: "1-5 Days",
         price: "From £200",
         rating: 4.9,
-        students_trained: 2500
+        students_trained: 2500,
+        duration_hours: 40,
+        difficulty_level: "Intermediate",
+        progress_percentage: 0,
+        enrolled_at: new Date().toISOString(),
+        status: "available"
       },
       {
         id: 2,
@@ -116,7 +121,12 @@ export default function handler(req, res) {
         duration: "1 Day",
         price: "£150",
         rating: 4.8,
-        students_trained: 3200
+        students_trained: 3200,
+        duration_hours: 8,
+        difficulty_level: "Beginner",
+        progress_percentage: 0,
+        enrolled_at: new Date().toISOString(),
+        status: "available"
       }
     ])
   }

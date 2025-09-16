@@ -131,6 +131,67 @@ export default function handler(req, res) {
     })
   }
 
+  // Mock user profiles
+  if (pathname === '/api/user-profiles/me' && req.method === 'GET') {
+    const authHeader = req.headers.authorization
+    if (!authHeader) {
+      return res.status(401).json({ detail: 'Not authenticated' })
+    }
+    
+    try {
+      const token = authHeader.replace('Bearer ', '')
+      const parts = token.split('.')
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
+      
+      return res.status(200).json({
+        id: 1,
+        email: payload.sub,
+        role: payload.role,
+        first_name: 'Demo',
+        last_name: 'User',
+        phone: '+44 1234 567890',
+        is_active: true,
+        created_at: new Date().toISOString()
+      })
+    } catch (error) {
+      return res.status(401).json({ detail: 'Invalid token' })
+    }
+  }
+
+  // Mock messaging endpoints
+  if (pathname === '/api/messaging/notifications' && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  if (pathname === '/api/messaging/notifications/stream' && req.method === 'GET') {
+    return res.status(200).json({ connected: true })
+  }
+
+  if (pathname === '/api/messaging/messages' && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  if (pathname === '/api/messaging/dashboard/summary' && req.method === 'GET') {
+    return res.status(200).json({
+      total_messages: 0,
+      unread_count: 0,
+      recent_activity: []
+    })
+  }
+
+  if (pathname === '/api/messaging/qa/posts' && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  if (pathname === '/api/messaging/recipients' && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  // Mock course requests
+  if (pathname === '/api/course-requests/pending' && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
   // Default response
   res.status(404).json({ detail: 'Not found' })
 }

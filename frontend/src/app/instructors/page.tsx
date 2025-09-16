@@ -31,6 +31,7 @@ import CourseCreationForm from '@/components/course-creation-form';
 import CourseRequestManagement from '@/components/CourseRequestManagement';
 import MessagingInterface from '@/components/messaging-interface';
 import NotificationBell from '@/components/notification-bell';
+import Link from 'next/link';
 
 interface Course {
   id: number;
@@ -871,15 +872,16 @@ export default function InstructorsPage() {
                       <Eye className="h-4 w-4 mr-2" />
                       View All Content
                     </Button>
-                    <Button
-                      onClick={() => setShowContentBuilder(true)}
-                      size="sm"
-                      variant="outline"
-                      className="border-purple-600 text-purple-600 hover:bg-purple-50"
-                    >
-                      <Settings className="h-4 w-4 mr-2" />
-                      AI Content Builder
-                    </Button>
+                    <Link href="/ai-content-builder">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-purple-600 text-purple-600 hover:bg-purple-50"
+                      >
+                        <Settings className="h-4 w-4 mr-2" />
+                        AI Content Builder
+                      </Button>
+                    </Link>
                   </div>
                 </CardTitle>
               </CardHeader>

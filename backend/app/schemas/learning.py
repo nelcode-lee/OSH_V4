@@ -71,20 +71,6 @@ class LearningProgressResponse(BaseModel):
         from_attributes = True
 
 
-class AssessmentResponse(BaseModel):
-    id: int
-    title: str
-    description: str
-    course_id: int
-    passing_score: int
-    time_limit_minutes: int
-    total_questions: int
-    questions: List['AssessmentQuestionResponse']
-
-    class Config:
-        from_attributes = True
-
-
 class AssessmentQuestionResponse(BaseModel):
     id: int
     question_text: str
@@ -93,6 +79,20 @@ class AssessmentQuestionResponse(BaseModel):
     correct_answer: str
     explanation: Optional[str] = None
     points: int
+
+    class Config:
+        from_attributes = True
+
+
+class AssessmentResponse(BaseModel):
+    id: int
+    title: str
+    description: str
+    course_id: int
+    passing_score: int
+    time_limit_minutes: int
+    total_questions: int
+    questions: List[AssessmentQuestionResponse]
 
     class Config:
         from_attributes = True

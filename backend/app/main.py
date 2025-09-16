@@ -5,10 +5,11 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from contextlib import asynccontextmanager
+import os
 
 from .core.config import settings
 from .core.database import create_tables
-from .api import auth, courses, users, learning, ai, course_management, user_profiles, content_management, instructor_ai, pdf_serve, student_learning, student_enrollment, assessments, learning_analytics, course_requests, web_content, image_serve, course_images, messaging, analytics, time_tracking, security, schedule, seed
+from .api import auth, courses, users, learning, ai, course_management, user_profiles, content_management, instructor_ai, pdf_serve, student_learning, student_enrollment, assessments, learning_analytics, course_requests, web_content, image_serve, course_images, messaging, analytics, time_tracking, security, schedule
 
 # Import all models to ensure they are registered with SQLAlchemy
 from .models import user, course, learning as learning_models, course_request, messaging as messaging_models, analytics as analytics_models
@@ -135,7 +136,6 @@ app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics &
 app.include_router(time_tracking.router, prefix="/api/time-tracking", tags=["Time Tracking"])
 app.include_router(security.router, prefix="/api/security", tags=["Security"])
 app.include_router(schedule.router, prefix="/api/schedule", tags=["Schedule & Events"])
-app.include_router(seed.router, prefix="/api", tags=["Database Seeding"])
 
 
 @app.get("/")
@@ -165,3 +165,9 @@ async def env_check():
         "vercel_env": os.getenv("VERCEL", "Not set"),
         "all_env_vars": {k: v for k, v in os.environ.items() if "AWS" in k or "S3" in k}
     }
+
+
+# Vercel handler
+def handler(request):
+    """Vercel serverless handler."""
+    return app(request)

@@ -383,6 +383,208 @@ export default async function handler(req, res) {
     return res.status(200).json([])
   }
 
+  // Students API endpoint
+  if (pathname === '/api/users/students' && req.method === 'GET') {
+    const mockStudents = [
+      {
+        id: 1,
+        email: "ahmed.hassan@example.com",
+        profile: {
+          first_name: "Ahmed",
+          last_name: "Hassan",
+          phone_number: "+44 7700 900123",
+          cscs_card_number: "CSCS123456"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-15T10:00:00Z",
+        courses_count: 3,
+        completed_courses: 2
+      },
+      {
+        id: 2,
+        email: "priya.patel@example.com",
+        profile: {
+          first_name: "Priya",
+          last_name: "Patel",
+          phone_number: "+44 7700 900124",
+          cscs_card_number: "CSCS789012"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-10T14:30:00Z",
+        courses_count: 2,
+        completed_courses: 1
+      },
+      {
+        id: 3,
+        email: "maria.rodriguez@example.com",
+        profile: {
+          first_name: "Maria",
+          last_name: "Rodriguez",
+          phone_number: "+44 7700 900125",
+          cscs_card_number: "CSCS456789"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-12T09:15:00Z",
+        courses_count: 4,
+        completed_courses: 3
+      },
+      {
+        id: 4,
+        email: "chen.wei@example.com",
+        profile: {
+          first_name: "Chen",
+          last_name: "Wei",
+          phone_number: "+44 7700 900126",
+          cscs_card_number: "CSCS567890"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-08T11:20:00Z",
+        courses_count: 3,
+        completed_courses: 2
+      },
+      {
+        id: 5,
+        email: "fatima.al-zahra@example.com",
+        profile: {
+          first_name: "Fatima",
+          last_name: "Al-Zahra",
+          phone_number: "+44 7700 900127",
+          cscs_card_number: "CSCS678901"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-20T16:45:00Z",
+        courses_count: 2,
+        completed_courses: 1
+      },
+      {
+        id: 6,
+        email: "kwame.asante@example.com",
+        profile: {
+          first_name: "Kwame",
+          last_name: "Asante",
+          phone_number: "+44 7700 900128",
+          cscs_card_number: "CSCS789012"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-18T13:30:00Z",
+        courses_count: 3,
+        completed_courses: 2
+      },
+      {
+        id: 7,
+        email: "yuki.tanaka@example.com",
+        profile: {
+          first_name: "Yuki",
+          last_name: "Tanaka",
+          phone_number: "+44 7700 900129",
+          cscs_card_number: "CSCS890123"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-14T08:15:00Z",
+        courses_count: 2,
+        completed_courses: 2
+      },
+      {
+        id: 8,
+        email: "carlos.mendez@example.com",
+        profile: {
+          first_name: "Carlos",
+          last_name: "Mendez",
+          phone_number: "+44 7700 900130",
+          cscs_card_number: "CSCS234561"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-11T12:00:00Z",
+        courses_count: 4,
+        completed_courses: 3
+      },
+      {
+        id: 9,
+        email: "sophie.dupont@example.com",
+        profile: {
+          first_name: "Sophie",
+          last_name: "Dupont",
+          phone_number: "+44 7700 900131",
+          cscs_card_number: "CSCS345672"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-17T15:30:00Z",
+        courses_count: 3,
+        completed_courses: 2
+      },
+      {
+        id: 10,
+        email: "nadia.ahmed@example.com",
+        profile: {
+          first_name: "Nadia",
+          last_name: "Ahmed",
+          phone_number: "+44 7700 900132",
+          cscs_card_number: "CSCS567894"
+        },
+        role: "student",
+        is_active: true,
+        is_verified: true,
+        created_at: "2024-01-09T10:45:00Z",
+        courses_count: 3,
+        completed_courses: 3
+      }
+    ];
+
+    // Parse query parameters
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    const page = parseInt(url.searchParams.get('page') || '1');
+    const limit = parseInt(url.searchParams.get('limit') || '10');
+    const search = url.searchParams.get('search') || '';
+    const status = url.searchParams.get('status') || 'all';
+
+    // Filter students based on search and status
+    let filteredStudents = mockStudents.filter(student => {
+      const matchesSearch = !search || 
+        student.email.toLowerCase().includes(search.toLowerCase()) ||
+        student.profile?.first_name?.toLowerCase().includes(search.toLowerCase()) ||
+        student.profile?.last_name?.toLowerCase().includes(search.toLowerCase());
+      
+      const matchesStatus = status === 'all' || 
+        (status === 'active' && student.is_active) ||
+        (status === 'inactive' && !student.is_active) ||
+        (status === 'verified' && student.is_verified) ||
+        (status === 'unverified' && !student.is_verified);
+      
+      return matchesSearch && matchesStatus;
+    });
+
+    // Paginate results
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+    return res.status(200).json({
+      students: paginatedStudents,
+      total: filteredStudents.length,
+      page: page,
+      limit: limit,
+      totalPages: Math.ceil(filteredStudents.length / limit)
+    });
+  }
+
   // Mock course creation endpoint
   if (pathname === '/api/courses/' && req.method === 'POST') {
     return res.status(201).json({ id: Date.now(), message: 'Course created successfully' })

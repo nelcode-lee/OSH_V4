@@ -9,7 +9,6 @@ const courses = [
     duration: "1-5 Days",
     students: 2500,
     rating: 4.9,
-    price: "From £200",
     image: "/images/equipment/forward-tipping-dumper.webp",
     video: "/videos/courses/plant-training.mp4",
     category: "Plant Training",
@@ -22,7 +21,6 @@ const courses = [
     duration: "1 Day",
     students: 3200,
     rating: 4.8,
-    price: "£150",
     image: "/images/courses/H&S.webp",
     video: "/videos/courses/plant-training.mp4",
     category: "Health & Safety",
@@ -35,7 +33,6 @@ const courses = [
     duration: "2-3 Days",
     students: 1800,
     rating: 4.9,
-    price: "£400",
     image: "/images/courses/gps training.jpeg",
     video: "/videos/courses/plant-training.mp4",
     category: "GPS Training",
@@ -48,7 +45,6 @@ const courses = [
     duration: "1-3 Days",
     students: 1200,
     rating: 4.7,
-    price: "From £250",
     image: "/images/courses/streetworks.jpg",
     video: "/videos/courses/plant-training.mp4",
     category: "Utility Detection",
@@ -129,10 +125,7 @@ export function Courses() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-slate-800">
-                    {course.price}
-                  </div>
+                <div className="flex items-center justify-end">
                   <Button size="sm" className="bg-teal-700 hover:bg-teal-800 text-white group-hover:bg-yellow-500 group-hover:text-slate-800 transition-all duration-300 transform group-hover:scale-105">
                     View Course
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />

@@ -11,7 +11,6 @@ const allCourses = [
     duration: "1-5 Days",
     students: 2500,
     rating: 4.9,
-    price: "From £200",
     image: "/images/equipment/forward-tipping-dumper.png",
     category: "Plant Training",
     description: "CPCS and NPORS plant training and technical tests for excavator, roller, dumpers, dozer, telehandler and wheeled loading shovels. Level 2 NVQs in plant operations also available.",
@@ -29,7 +28,6 @@ const allCourses = [
     duration: "12-16 Months",
     students: 1800,
     rating: 4.8,
-    price: "Apprenticeship",
     image: "/images/courses/Compliance-Plus.webp",
     category: "Apprenticeships",
     description: "A new apprenticeship standard aimed at new entrants looking to start a career as a plant operative. Duration of 12-16 months with robust end-point assessment.",
@@ -47,7 +45,6 @@ const allCourses = [
     duration: "1-3 Days",
     students: 1200,
     rating: 4.7,
-    price: "From £250",
     image: "/images/courses/bb_utility.webp",
     category: "Utility Detection",
     description: "Range of utility detection, mapping and safe digging practice training at our world-class detection facility, fully accredited to EUSR, SHEA and DWI.",
@@ -65,7 +62,6 @@ const allCourses = [
     duration: "1-2 Days",
     students: 2100,
     rating: 4.6,
-    price: "From £180",
     image: "/images/courses/streetworks.jpg",
     category: "NRSWA",
     description: "The NRSWA course for operatives and supervisors ensures all works on roads and infrastructure in the UK meets the highest standard and current regulations.",
@@ -83,7 +79,6 @@ const allCourses = [
     duration: "2-3 Days",
     students: 1800,
     rating: 4.9,
-    price: "£400",
     image: "/images/courses/gps training.jpeg",
     category: "GPS Training",
     description: "GPS training using simulation and practical exercises. Upskilling excavator, dozer, roller, and grader drivers on GPS machine control and guidance technology.",
@@ -101,7 +96,6 @@ const allCourses = [
     duration: "1-5 Days",
     students: 3200,
     rating: 4.8,
-    price: "From £150",
     image: "/images/courses/site safety.jpeg",
     category: "Site Safety",
     description: "Full range of CITB accredited Site Safety Plus courses enabling workers in the construction sector to develop their skills from operatives to senior managers.",
@@ -119,7 +113,6 @@ const allCourses = [
     duration: "1-3 Days",
     students: 1500,
     rating: 4.7,
-    price: "From £200",
     image: "/images/courses/nocn.jpeg",
     category: "NOCN",
     description: "Range of bespoke courses such as Site Right to provide learners with certification showing they are safe and competent to work on construction sites.",
@@ -137,7 +130,6 @@ const allCourses = [
     duration: "1 Day",
     students: 3200,
     rating: 4.8,
-    price: "£150",
     image: "/images/courses/H&S.jpg",
     category: "Health & Safety",
     description: "Designed to keep people safe on site, covering topics including the people plant interface. Delivered on site or at the Hub.",
@@ -255,10 +247,7 @@ export default function CoursesPage() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <div className="text-2xl font-bold text-slate-800">
-                      {course.price}
-                    </div>
+                  <div className="flex items-center justify-end">
                     <Button size="sm" className="bg-teal-700 hover:bg-teal-800 text-white group-hover:bg-yellow-500 group-hover:text-slate-800 transition-all duration-300 transform group-hover:scale-105">
                       View Details
                       <ArrowRight className="ml-2 w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />

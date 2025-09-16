@@ -10,7 +10,6 @@ interface Course {
   description: string;
   category: string;
   duration: number;
-  price: number;
   status: string;
 }
 

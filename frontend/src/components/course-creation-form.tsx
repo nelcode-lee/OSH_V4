@@ -36,7 +36,6 @@ interface CourseFormData {
   category: string;
   difficulty_level: string;
   duration_hours: string;
-  price: string;
   status: string;
 }
 
@@ -75,7 +74,6 @@ export default function CourseCreationForm({
     category: '',
     difficulty_level: 'beginner',
     duration_hours: '',
-    price: '0',
     status: 'draft'
   });
   
@@ -113,7 +111,6 @@ export default function CourseCreationForm({
         category: formData.category || null,
         difficulty_level: formData.difficulty_level,
         duration_hours: formData.duration_hours ? parseFloat(formData.duration_hours) : null,
-        price: parseFloat(formData.price) || 0,
         status: formData.status,
         is_active: true
       };
@@ -141,7 +138,6 @@ export default function CourseCreationForm({
         category: '',
         difficulty_level: 'beginner',
         duration_hours: '',
-        price: '0',
         status: 'draft'
       });
 
@@ -238,39 +234,21 @@ export default function CourseCreationForm({
         </div>
       </div>
 
-      {/* Duration and Price */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <Label htmlFor="duration" className="text-sm font-medium text-gray-700">
-            Duration (Hours)
-          </Label>
-          <Input
-            id="duration"
-            type="number"
-            step="0.5"
-            min="0"
-            value={formData.duration_hours}
-            onChange={(e) => handleInputChange('duration_hours', e.target.value)}
-            placeholder="e.g., 8.5"
-            className="mt-1"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="price" className="text-sm font-medium text-gray-700">
-            Price (£)
-          </Label>
-          <Input
-            id="price"
-            type="number"
-            step="0.01"
-            min="0"
-            value={formData.price}
-            onChange={(e) => handleInputChange('price', e.target.value)}
-            placeholder="0.00"
-            className="mt-1"
-          />
-        </div>
+      {/* Duration */}
+      <div>
+        <Label htmlFor="duration" className="text-sm font-medium text-gray-700">
+          Duration (Hours)
+        </Label>
+        <Input
+          id="duration"
+          type="number"
+          step="0.5"
+          min="0"
+          value={formData.duration_hours}
+          onChange={(e) => handleInputChange('duration_hours', e.target.value)}
+          placeholder="e.g., 8.5"
+          className="mt-1"
+        />
       </div>
 
       {/* Status */}

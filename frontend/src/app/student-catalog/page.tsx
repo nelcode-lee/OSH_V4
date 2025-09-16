@@ -377,10 +377,10 @@ export default function StudentCatalog() {
                 </div>
               </div>
 
-              {/* Price */}
+              {/* Funding Status */}
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">From</span>
-                <span className="text-lg font-bold text-green-600">£200</span>
+                <span className="text-sm text-gray-600">Funding</span>
+                <span className="text-lg font-bold text-green-600">Available</span>
               </div>
 
               {course.status === 'available' && (

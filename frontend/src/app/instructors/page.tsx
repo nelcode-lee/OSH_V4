@@ -127,7 +127,7 @@ export default function InstructorsPage() {
       const token = localStorage.getItem('token');
       console.log('Loading courses with token:', token ? 'Present' : 'Missing');
       
-      const response = await fetch(`${api.baseUrl}/api/courses/instructor-dashboard`, {
+      const response = await fetch(`${api.baseUrl}/api/courses/`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -137,8 +137,9 @@ export default function InstructorsPage() {
       
       if (response.ok) {
         const data = await response.json();
-        console.log('Courses data received:', data.length, 'courses');
-        setCourses(data);
+        console.log('Courses data received:', Array.isArray(data) ? data.length : 'not an array', 'courses');
+        // Ensure data is an array to prevent crashes
+        setCourses(Array.isArray(data) ? data : []);
       } else {
         const errorText = await response.text();
         console.error('Courses API error:', response.status, errorText);

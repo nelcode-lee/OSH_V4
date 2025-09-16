@@ -4,6 +4,7 @@
  */
 
 const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
 
 // Create connection pool
 const pool = new Pool({
@@ -105,7 +106,8 @@ async function createTables() {
 // User operations
 async function createUser(userData) {
   try {
-    const { email, password_hash, first_name, last_name, role, phone } = userData;
+    const { email, password, first_name, last_name, role, phone } = userData;
+    const password_hash = await bcrypt.hash(password, 10);
     const client = await pool.connect();
     
     const result = await client.query(`
@@ -118,6 +120,35 @@ async function createUser(userData) {
     return result.rows[0];
   } catch (error) {
     console.error('Error creating user:', error.message);
+    throw error;
+  }
+}
+
+async function authenticateUser(email, password) {
+  try {
+    const client = await pool.connect();
+    const result = await client.query(
+      'SELECT * FROM users WHERE email = $1 AND is_active = true',
+      [email]
+    );
+    client.release();
+    
+    if (result.rows.length === 0) {
+      return null;
+    }
+    
+    const user = result.rows[0];
+    const isValidPassword = await bcrypt.compare(password, user.password_hash);
+    
+    if (!isValidPassword) {
+      return null;
+    }
+    
+    // Return user without password hash
+    const { password_hash, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  } catch (error) {
+    console.error('Error authenticating user:', error.message);
     throw error;
   }
 }
@@ -212,6 +243,7 @@ module.exports = {
   testConnection,
   createTables,
   createUser,
+  authenticateUser,
   getUserByEmail,
   getCourses,
   createCourse,

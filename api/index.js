@@ -29,56 +29,93 @@ export default function handler(req, res) {
     return res.status(200).json({ status: 'healthy', version: '1.0.0' })
   }
 
-  // Mock authentication
+  // Authentication - try database first, fallback to mock
   if (pathname === '/api/auth/login' && req.method === 'POST') {
-    let username, password;
-    
-    // Handle both JSON and form-encoded data
-    if (req.headers['content-type'] === 'application/json') {
-      ({ username, password } = req.body);
-    } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
-      const body = req.body;
-      username = body.username;
-      password = body.password;
-    } else {
-      return res.status(400).json({ detail: 'Invalid content type' });
-    }
-    
-    // Demo credentials
-    const demoUsers = {
-      'instructor@example.com': { role: 'instructor', password: 'password123' },
-      'student@example.com': { role: 'student', password: 'password123' },
-      'admin@example.com': { role: 'admin', password: 'password123' }
-    }
-    
-    const user = demoUsers[username]
-    if (user && user.password === password) {
-      // Mock JWT token (simplified structure)
-      const header = { alg: 'HS256', typ: 'JWT' };
-      const payload = { 
-        sub: username, 
-        role: user.role,
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 3600 // 1 hour
-      };
+    try {
+      let username, password;
       
-      // Create a simple JWT-like token
-      const headerB64 = Buffer.from(JSON.stringify(header)).toString('base64url');
-      const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
-      const signature = 'mock-signature';
+      // Handle both JSON and form-encoded data
+      if (req.headers['content-type'] === 'application/json') {
+        ({ username, password } = req.body);
+      } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+        const body = req.body;
+        username = body.username;
+        password = body.password;
+      } else {
+        return res.status(400).json({ detail: 'Invalid content type' });
+      }
       
-      const token = `${headerB64}.${payloadB64}.${signature}`;
+      let user = null;
       
-      return res.status(200).json({
-        access_token: token,
-        token_type: 'bearer'
-      })
+      // Try database authentication first
+      if (dbInitialized) {
+        try {
+          user = await dbService.authenticateUser(username, password);
+        } catch (dbError) {
+          console.error('Database authentication error:', dbError);
+          // Fall through to mock authentication
+        }
+      }
+      
+      // Fallback to mock authentication if database fails or not initialized
+      if (!user) {
+        const demoUsers = {
+          'instructor@example.com': { role: 'instructor', password: 'password123' },
+          'student@example.com': { role: 'student', password: 'password123' },
+          'admin@example.com': { role: 'admin', password: 'password123' }
+        }
+        
+        const demoUser = demoUsers[username];
+        if (demoUser && demoUser.password === password) {
+          user = {
+            id: 1,
+            email: username,
+            role: demoUser.role,
+            first_name: 'Demo',
+            last_name: 'User'
+          };
+        }
+      }
+      
+      if (user) {
+        // Create JWT token
+        const header = { alg: 'HS256', typ: 'JWT' };
+        const payload = { 
+          sub: user.email, 
+          role: user.role,
+          user_id: user.id,
+          iat: Math.floor(Date.now() / 1000),
+          exp: Math.floor(Date.now() / 1000) + 3600 // 1 hour
+        };
+        
+        // Create a simple JWT-like token
+        const headerB64 = Buffer.from(JSON.stringify(header)).toString('base64url');
+        const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
+        const signature = 'mock-signature';
+        
+        const token = `${headerB64}.${payloadB64}.${signature}`;
+        
+        return res.status(200).json({
+          access_token: token,
+          token_type: 'bearer',
+          user: {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            first_name: user.first_name,
+            last_name: user.last_name
+          }
+        });
+      }
+      
+      return res.status(401).json({ detail: 'Incorrect email or password' });
+    } catch (error) {
+      console.error('Login error:', error);
+      return res.status(500).json({ detail: 'Internal server error' });
     }
-    
-    return res.status(401).json({ detail: 'Incorrect email or password' })
   }
 
-  // Mock user profile
+  // User profile - try database first, fallback to mock
   if (pathname === '/api/auth/me' && req.method === 'GET') {
     const authHeader = req.headers.authorization
     if (!authHeader) {
@@ -94,15 +131,79 @@ export default function handler(req, res) {
       
       const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString())
       
+      // Try to get user from database
+      if (dbInitialized && payload.user_id) {
+        try {
+          const user = await dbService.getUserByEmail(payload.sub);
+          if (user) {
+            const { password_hash, ...userWithoutPassword } = user;
+            return res.status(200).json(userWithoutPassword);
+          }
+        } catch (dbError) {
+          console.error('Database user lookup error:', dbError);
+          // Fall through to mock response
+        }
+      }
+      
+      // Fallback to mock response
       return res.status(200).json({
-        id: 1,
+        id: payload.user_id || 1,
         email: payload.sub,
         role: payload.role,
+        first_name: 'Demo',
+        last_name: 'User',
         is_active: true,
         created_at: new Date().toISOString()
-      })
+      });
     } catch (error) {
       return res.status(401).json({ detail: 'Invalid token' })
+    }
+  }
+
+  // User registration
+  if (pathname === '/api/auth/register' && req.method === 'POST') {
+    try {
+      const { email, password, first_name, last_name, role = 'student', phone } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ detail: 'Email and password are required' });
+      }
+      
+      if (dbInitialized) {
+        try {
+          const user = await dbService.createUser({
+            email,
+            password,
+            first_name,
+            last_name,
+            role,
+            phone
+          });
+          
+          return res.status(201).json({
+            message: 'User created successfully',
+            user: {
+              id: user.id,
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              role: user.role,
+              created_at: user.created_at
+            }
+          });
+        } catch (dbError) {
+          if (dbError.code === '23505') { // Unique constraint violation
+            return res.status(409).json({ detail: 'User with this email already exists' });
+          }
+          console.error('Database registration error:', dbError);
+          return res.status(500).json({ detail: 'Failed to create user' });
+        }
+      } else {
+        return res.status(503).json({ detail: 'Database not available' });
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return res.status(500).json({ detail: 'Internal server error' });
     }
   }
 

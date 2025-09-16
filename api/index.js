@@ -96,7 +96,7 @@ export default function handler(req, res) {
   }
 
   // Mock courses data
-  if (pathname === '/api/courses/' && req.method === 'GET') {
+  if ((pathname === '/api/courses/' || pathname === '/api/courses') && req.method === 'GET') {
     return res.status(200).json([
       {
         id: 1,

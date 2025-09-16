@@ -19,5 +19,8 @@
       "src": "/(.*)",
       "dest": "frontend/$1"
     }
-  ]
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://operator-skills-hub-v4-peqf8ldra-lee-leewilsondats-projects.vercel.app"
+  }
 }

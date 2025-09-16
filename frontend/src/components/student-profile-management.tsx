@@ -39,7 +39,6 @@ import {
   Star,
   AlertCircle,
   CheckCircle2,
-  XCircle,
   Activity,
   Zap
 } from 'lucide-react';

@@ -65,9 +65,11 @@ export default function InstructorDashboard() {
         }
       });
       const data = await response.json();
-      setCourses(data);
+      // Ensure data is an array to prevent reduce errors
+      setCourses(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error loading courses:', error);
+      setCourses([]); // Set empty array on error
     }
   };
 
@@ -195,7 +197,7 @@ export default function InstructorDashboard() {
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Total Students</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {courses.reduce((sum, course) => sum + course.student_count, 0)}
+                    {courses.reduce((sum, course) => sum + (course.student_count || 0), 0)}
                   </p>
                 </div>
               </div>
@@ -209,7 +211,7 @@ export default function InstructorDashboard() {
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Content Items</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {courses.reduce((sum, course) => sum + course.content_count, 0)}
+                    {courses.reduce((sum, course) => sum + (course.content_count || 0), 0)}
                   </p>
                 </div>
               </div>

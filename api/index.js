@@ -111,7 +111,10 @@ export default function handler(req, res) {
         difficulty_level: "Intermediate",
         progress_percentage: 0,
         enrolled_at: new Date().toISOString(),
-        status: "available"
+        status: "available",
+        student_count: 15,
+        content_count: 8,
+        created_at: new Date().toISOString()
       },
       {
         id: 2,
@@ -126,7 +129,10 @@ export default function handler(req, res) {
         difficulty_level: "Beginner",
         progress_percentage: 0,
         enrolled_at: new Date().toISOString(),
-        status: "available"
+        status: "available",
+        student_count: 12,
+        content_count: 5,
+        created_at: new Date().toISOString()
       }
     ])
   }
@@ -138,6 +144,31 @@ export default function handler(req, res) {
       active_students: 45,
       completed_courses: 8,
       pending_requests: 3
+    })
+  }
+
+  // Mock course students endpoint
+  if (pathname.startsWith('/api/courses/') && pathname.endsWith('/students') && req.method === 'GET') {
+    const courseId = pathname.split('/')[3];
+    return res.status(200).json({
+      students: [
+        {
+          id: 1,
+          email: 'student1@example.com',
+          first_name: 'John',
+          last_name: 'Doe',
+          cscs_card_number: 'CSCS123456',
+          is_active: true
+        },
+        {
+          id: 2,
+          email: 'student2@example.com',
+          first_name: 'Jane',
+          last_name: 'Smith',
+          cscs_card_number: 'CSCS789012',
+          is_active: true
+        }
+      ]
     })
   }
 

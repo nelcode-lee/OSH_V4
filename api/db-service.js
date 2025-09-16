@@ -126,29 +126,41 @@ async function createUser(userData) {
 
 async function authenticateUser(email, password) {
   try {
+    console.log('Connecting to database for user:', email);
     const client = await pool.connect();
+    console.log('Database connection established');
+    
     const result = await client.query(
       'SELECT * FROM users WHERE email = $1 AND is_active = true',
       [email]
     );
+    console.log('User query result:', result.rows.length, 'rows');
+    
     client.release();
     
     if (result.rows.length === 0) {
+      console.log('No user found with email:', email);
       return null;
     }
     
     const user = result.rows[0];
+    console.log('User found, checking password...');
+    
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
+    console.log('Password validation result:', isValidPassword);
     
     if (!isValidPassword) {
+      console.log('Invalid password for user:', email);
       return null;
     }
     
     // Return user without password hash
     const { password_hash, ...userWithoutPassword } = user;
+    console.log('Authentication successful for user:', email);
     return userWithoutPassword;
   } catch (error) {
     console.error('Error authenticating user:', error.message);
+    console.error('Authentication error stack:', error.stack);
     throw error;
   }
 }

@@ -1,11 +1,23 @@
 // API with Neon DB integration
 const dbService = require('./db-service');
 
+// Add error handling for missing dependencies
+try {
+  const bcrypt = require('bcryptjs');
+  console.log('✅ bcryptjs loaded successfully');
+} catch (error) {
+  console.error('❌ bcryptjs not available:', error.message);
+}
+
 // Initialize database connection
 let dbInitialized = false;
 dbService.initializeDatabase().then(initialized => {
   dbInitialized = initialized;
   console.log('Database initialized:', initialized);
+}).catch(error => {
+  console.error('Database initialization failed:', error.message);
+  console.error('Database init error stack:', error.stack);
+  dbInitialized = false;
 });
 
 export default function handler(req, res) {
@@ -50,11 +62,16 @@ export default function handler(req, res) {
       // Try database authentication first
       if (dbInitialized) {
         try {
+          console.log('Attempting database authentication for:', username);
           user = await dbService.authenticateUser(username, password);
+          console.log('Database authentication result:', user ? 'success' : 'failed');
         } catch (dbError) {
-          console.error('Database authentication error:', dbError);
+          console.error('Database authentication error:', dbError.message);
+          console.error('Database error stack:', dbError.stack);
           // Fall through to mock authentication
         }
+      } else {
+        console.log('Database not initialized, using mock authentication');
       }
       
       // Fallback to mock authentication if database fails or not initialized

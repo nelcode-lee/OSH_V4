@@ -196,10 +196,12 @@ export default function CourseManagementPage() {
                     <Download className="h-4 w-4 mr-2" />
                     Export
                   </Button>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create Course
-                  </Button>
+                  <Link href="/course-creation">
+                    <Button>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Create Course
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>

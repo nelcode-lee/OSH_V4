@@ -19,7 +19,11 @@ export const api = {
     if (!token) return false;
     
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const parts = token.split('.');
+      if (parts.length !== 3) return false;
+      
+      // Decode base64url
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
       return payload.exp * 1000 > Date.now();
     } catch {
       return false;

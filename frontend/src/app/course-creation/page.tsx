@@ -210,133 +210,173 @@ export default function CourseCreationPage() {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="title">Course Title *</Label>
-              <Input
-                id="title"
-                value={formData.title}
-                onChange={(e) => handleInputChange('title', e.target.value)}
-                placeholder="Enter course title"
-                className="mt-1"
-              />
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="group">
+                  <Label htmlFor="title" className="text-base font-semibold text-gray-900 mb-3 block">
+                    Course Title *
+                  </Label>
+                  <Input
+                    id="title"
+                    value={formData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    placeholder="Enter course title"
+                    className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl"
+                  />
+                  <p className="text-sm text-gray-500 mt-2">Choose a clear, descriptive title that reflects the course content</p>
+                </div>
+
+                <div className="group">
+                  <Label htmlFor="category" className="text-base font-semibold text-gray-900 mb-3 block">
+                    Category *
+                  </Label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) => handleInputChange('category', value)}
+                  >
+                    <SelectTrigger className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl">
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-2">
+                      {categories.map((category) => (
+                        <SelectItem key={category} value={category} className="text-base py-3">
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-gray-500 mt-2">Select the most appropriate category for your course</p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="group">
+                  <Label htmlFor="short_description" className="text-base font-semibold text-gray-900 mb-3 block">
+                    Short Description *
+                  </Label>
+                  <Textarea
+                    id="short_description"
+                    value={formData.short_description}
+                    onChange={(e) => handleInputChange('short_description', e.target.value)}
+                    placeholder="Brief description (1-2 sentences)"
+                    className="border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl resize-none"
+                    rows={3}
+                  />
+                  <p className="text-sm text-gray-500 mt-2">This will appear in course listings and previews</p>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <Label htmlFor="short_description">Short Description *</Label>
-              <Textarea
-                id="short_description"
-                value={formData.short_description}
-                onChange={(e) => handleInputChange('short_description', e.target.value)}
-                placeholder="Brief description (1-2 sentences)"
-                className="mt-1"
-                rows={2}
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="description">Full Description *</Label>
+            <div className="group">
+              <Label htmlFor="description" className="text-base font-semibold text-gray-900 mb-3 block">
+                Full Description *
+              </Label>
               <Textarea
                 id="description"
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
-                placeholder="Detailed course description"
-                className="mt-1"
-                rows={4}
+                placeholder="Detailed course description including what students will learn, who it's for, and what they'll achieve"
+                className="border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl resize-none"
+                rows={6}
               />
-            </div>
-
-            <div>
-              <Label htmlFor="category">Category *</Label>
-              <Select
-                value={formData.category}
-                onValueChange={(value) => handleInputChange('category', value)}
-              >
-                <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <p className="text-sm text-gray-500 mt-2">Provide a comprehensive overview of your course content and objectives</p>
             </div>
           </div>
         );
 
       case 2:
         return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="duration_hours">Duration (Hours) *</Label>
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="group">
+                <Label htmlFor="duration_hours" className="text-base font-semibold text-gray-900 mb-3 block flex items-center">
+                  <Clock className="h-5 w-5 mr-2 text-blue-600" />
+                  Duration (Hours) *
+                </Label>
                 <Input
                   id="duration_hours"
                   type="number"
                   value={formData.duration_hours}
                   onChange={(e) => handleInputChange('duration_hours', parseInt(e.target.value))}
-                  className="mt-1"
+                  className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl"
+                  placeholder="8"
                 />
+                <p className="text-sm text-gray-500 mt-2">Total course duration in hours</p>
               </div>
 
-              <div>
-                <Label htmlFor="max_students">Maximum Students</Label>
+              <div className="group">
+                <Label htmlFor="max_students" className="text-base font-semibold text-gray-900 mb-3 block flex items-center">
+                  <Users className="h-5 w-5 mr-2 text-green-600" />
+                  Maximum Students
+                </Label>
                 <Input
                   id="max_students"
                   type="number"
                   value={formData.max_students}
                   onChange={(e) => handleInputChange('max_students', parseInt(e.target.value))}
-                  className="mt-1"
+                  className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl"
+                  placeholder="20"
                 />
+                <p className="text-sm text-gray-500 mt-2">Maximum number of students allowed</p>
+              </div>
+
+              <div className="group">
+                <Label htmlFor="difficulty_level" className="text-base font-semibold text-gray-900 mb-3 block flex items-center">
+                  <Target className="h-5 w-5 mr-2 text-orange-600" />
+                  Difficulty Level *
+                </Label>
+                <Select
+                  value={formData.difficulty_level}
+                  onValueChange={(value) => handleInputChange('difficulty_level', value)}
+                >
+                  <SelectTrigger className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl border-2">
+                    {difficultyLevels.map((level) => (
+                      <SelectItem key={level.value} value={level.value} className="text-base py-3">
+                        <div className="flex flex-col">
+                          <div className="font-medium">{level.label}</div>
+                          <div className="text-sm text-gray-500">{level.description}</div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-gray-500 mt-2">Choose the appropriate difficulty level</p>
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="difficulty_level">Difficulty Level *</Label>
-              <Select
-                value={formData.difficulty_level}
-                onValueChange={(value) => handleInputChange('difficulty_level', value)}
-              >
-                <SelectTrigger className="mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {difficultyLevels.map((level) => (
-                    <SelectItem key={level.value} value={level.value}>
-                      <div>
-                        <div className="font-medium">{level.label}</div>
-                        <div className="text-sm text-gray-500">{level.description}</div>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="start_date">Start Date</Label>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="group">
+                <Label htmlFor="start_date" className="text-base font-semibold text-gray-900 mb-3 block flex items-center">
+                  <Calendar className="h-5 w-5 mr-2 text-purple-600" />
+                  Start Date
+                </Label>
                 <Input
                   id="start_date"
                   type="date"
                   value={formData.start_date}
                   onChange={(e) => handleInputChange('start_date', e.target.value)}
-                  className="mt-1"
+                  className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl"
                 />
+                <p className="text-sm text-gray-500 mt-2">When the course becomes available</p>
               </div>
 
-              <div>
-                <Label htmlFor="end_date">End Date</Label>
+              <div className="group">
+                <Label htmlFor="end_date" className="text-base font-semibold text-gray-900 mb-3 block flex items-center">
+                  <Calendar className="h-5 w-5 mr-2 text-red-600" />
+                  End Date
+                </Label>
                 <Input
                   id="end_date"
                   type="date"
                   value={formData.end_date}
                   onChange={(e) => handleInputChange('end_date', e.target.value)}
-                  className="mt-1"
+                  className="h-12 text-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200 rounded-xl"
                 />
+                <p className="text-sm text-gray-500 mt-2">When the course enrollment closes</p>
               </div>
             </div>
           </div>
@@ -604,125 +644,188 @@ export default function CourseCreationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <Navigation currentPath="/course-creation" />
       <div className="py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <Link href="/course-management">
-                  <Button variant="outline" size="sm">
-                    <ArrowLeft className="h-4 w-4 mr-2" />
-                    Back to Courses
-                  </Button>
-                </Link>
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Create New Course</h1>
-                  <p className="text-gray-600">Build a comprehensive course for your students</p>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Enhanced Header */}
+          <div className="mb-12">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-6">
+                  <Link href="/course-management">
+                    <Button variant="outline" size="lg" className="hover:bg-blue-50 hover:border-blue-200 transition-all duration-200">
+                      <ArrowLeft className="h-5 w-5 mr-2" />
+                      Back to Courses
+                    </Button>
+                  </Link>
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <BookOpen className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                        Create New Course
+                      </h1>
+                      <p className="text-lg text-gray-600 mt-2">Build a comprehensive course for your students</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex space-x-2">
-                <Button variant="outline">
-                  <Eye className="h-4 w-4 mr-2" />
-                  Preview
-                </Button>
-                <Button onClick={handleSubmit} disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Creating...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="h-4 w-4 mr-2" />
-                      Create Course
-                    </>
-                  )}
-                </Button>
+                <div className="flex space-x-3">
+                  <Button variant="outline" size="lg" className="hover:bg-gray-50 transition-all duration-200">
+                    <Eye className="h-5 w-5 mr-2" />
+                    Preview
+                  </Button>
+                  <Button 
+                    onClick={handleSubmit} 
+                    disabled={isSubmitting}
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                        Creating...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-5 w-5 mr-2" />
+                        Create Course
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Progress Steps */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
-              {steps.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
-                    currentStep >= step.id
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {currentStep > step.id ? (
-                      <CheckCircle className="h-4 w-4" />
-                    ) : (
-                      step.id
+          {/* Enhanced Progress Steps */}
+          <div className="mb-12">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+              <div className="flex items-center justify-between">
+                {steps.map((step, index) => (
+                  <div key={step.id} className="flex items-center flex-1">
+                    <div className="flex flex-col items-center">
+                      <div className={`relative flex items-center justify-center w-12 h-12 rounded-full text-sm font-bold transition-all duration-300 ${
+                        currentStep >= step.id
+                          ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg scale-110'
+                          : currentStep === step.id
+                          ? 'bg-gradient-to-r from-blue-400 to-indigo-500 text-white shadow-md scale-105'
+                          : 'bg-gray-100 text-gray-400'
+                      }`}>
+                        {currentStep > step.id ? (
+                          <CheckCircle className="h-6 w-6" />
+                        ) : (
+                          <span className="text-lg">{step.id}</span>
+                        )}
+                        {currentStep === step.id && (
+                          <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full animate-pulse opacity-75"></div>
+                        )}
+                      </div>
+                      <div className="mt-3 text-center">
+                        <p className={`text-sm font-semibold ${
+                          currentStep >= step.id ? 'text-gray-900' : 'text-gray-500'
+                        }`}>
+                          {step.title}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1 max-w-24">{step.description}</p>
+                      </div>
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div className={`flex-1 h-1 mx-4 rounded-full transition-all duration-500 ${
+                        currentStep > step.id 
+                          ? 'bg-gradient-to-r from-blue-500 to-indigo-600' 
+                          : 'bg-gray-200'
+                      }`} />
                     )}
                   </div>
-                  <div className="ml-3">
-                    <p className={`text-sm font-medium ${
-                      currentStep >= step.id ? 'text-blue-600' : 'text-gray-500'
-                    }`}>
-                      {step.title}
-                    </p>
-                    <p className="text-xs text-gray-500">{step.description}</p>
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className={`w-16 h-0.5 mx-4 ${
-                      currentStep > step.id ? 'bg-blue-600' : 'bg-gray-200'
-                    }`} />
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Form Content */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                {steps[currentStep - 1].title}
-                <Badge variant="outline" className="ml-2">
+          {/* Enhanced Form Content */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-8 py-6 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">{currentStep}</span>
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-900">{steps[currentStep - 1].title}</h2>
+                    <p className="text-gray-600 mt-1">{steps[currentStep - 1].description}</p>
+                  </div>
+                </div>
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-4 py-2 text-sm font-medium">
                   Step {currentStep} of {steps.length}
                 </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+              </div>
+            </div>
+            <div className="p-8">
               {renderStepContent()}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-8">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 1}
-            >
-              Previous
-            </Button>
-            <div className="flex space-x-2">
-              {currentStep < steps.length ? (
-                <Button onClick={nextStep}>
-                  Next Step
+          {/* Enhanced Navigation Buttons */}
+          <div className="mt-12">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStep === 1}
+                  size="lg"
+                  className="h-12 px-8 border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ArrowLeft className="h-5 w-5 mr-2" />
+                  Previous
                 </Button>
-              ) : (
-                <Button onClick={handleSubmit} disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Creating Course...
-                    </>
+                
+                <div className="flex items-center space-x-4">
+                  <div className="text-sm text-gray-500">
+                    Step {currentStep} of {steps.length}
+                  </div>
+                  <div className="w-32 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${(currentStep / steps.length) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="flex space-x-3">
+                  {currentStep < steps.length ? (
+                    <Button 
+                      onClick={nextStep}
+                      size="lg"
+                      className="h-12 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 rounded-xl"
+                    >
+                      Next Step
+                      <ArrowLeft className="h-5 w-5 ml-2 rotate-180" />
+                    </Button>
                   ) : (
-                    <>
-                      <Save className="h-4 w-4 mr-2" />
-                      Create Course
-                    </>
+                    <Button 
+                      onClick={handleSubmit} 
+                      disabled={isSubmitting}
+                      size="lg"
+                      className="h-12 px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 rounded-xl"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                          Creating Course...
+                        </>
+                      ) : (
+                        <>
+                          <Save className="h-5 w-5 mr-2" />
+                          Create Course
+                        </>
+                      )}
+                    </Button>
                   )}
-                </Button>
-              )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

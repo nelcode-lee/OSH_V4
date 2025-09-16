@@ -18,7 +18,8 @@ import {
   FileText,
   Award,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Sparkles
 } from 'lucide-react';
 import { api, getAuthHeaders } from '@/lib/api';
 import { User as UserType } from '@/types/user';
@@ -88,7 +89,8 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
       ],
       instructor: [
         { href: '/instructors', label: 'Instructor Dashboard', icon: BarChart3 },
-        { href: '/instructors#courses-section', label: 'Manage Courses', icon: HardHat },
+        { href: '/course-management', label: 'Manage Courses', icon: HardHat },
+        { href: '/ai-content-builder', label: 'AI Content Builder', icon: Sparkles },
         { href: '/students', label: 'Students', icon: Users },
         { href: '/analytics', label: 'Analytics', icon: BarChart3 },
         { href: '/schedule', label: 'Schedule', icon: Calendar },

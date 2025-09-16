@@ -96,7 +96,8 @@ export default function AIContentBuilderPage() {
           description: '',
           additional_instructions: '',
           difficulty_level: 'intermediate',
-          target_audience: 'Construction workers and safety professionals'
+          target_audience: 'Construction workers and safety professionals',
+          use_rag: true
         });
       } else {
         alert('Failed to save content');

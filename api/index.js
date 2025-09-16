@@ -548,26 +548,65 @@ Based on analysis of existing course materials and industry documentation:
 ## Overview
 ${request.description}${ragContext}
 
+## Learning Objectives
+By the end of this module, you will be able to:
+- Understand the fundamental principles of ${request.title}
+- Apply safety protocols and best practices
+- Demonstrate competency in practical applications
+- Identify potential hazards and mitigation strategies
+- Follow industry standards and regulations
+
 ## Key Learning Points
-- **Safety First**: Always follow established safety protocols
-- **Proper Procedures**: Use correct techniques and methods
-- **Quality Standards**: Maintain high quality in all operations
-- **Continuous Improvement**: Seek ways to enhance performance
+
+### 1. Safety and Compliance
+- **Personal Protective Equipment (PPE)**: Always wear appropriate safety gear
+- **Risk Assessment**: Identify and evaluate potential hazards before starting work
+- **Emergency Procedures**: Know how to respond to accidents and emergencies
+- **Regulatory Compliance**: Follow all relevant health and safety regulations
+
+### 2. Technical Knowledge
+- **Equipment Operation**: Understanding proper use and maintenance of tools and machinery
+- **Quality Standards**: Maintaining high standards in all operations
+- **Documentation**: Keeping accurate records and reports
+- **Problem Solving**: Identifying and resolving issues effectively
+
+### 3. Practical Application
+- **Hands-on Experience**: Applying knowledge in real-world scenarios
+- **Team Coordination**: Working effectively with colleagues and supervisors
+- **Continuous Improvement**: Seeking ways to enhance performance and safety
+- **Professional Development**: Staying updated with industry best practices
 
 ## Detailed Content
-This comprehensive learning material covers essential aspects of ${request.title.toLowerCase()}. Students will gain practical knowledge and skills that can be immediately applied in real-world scenarios.
 
-### Section 1: Fundamentals
-Understanding the basic principles and concepts is crucial for success in this area.
+### Section 1: Fundamentals of ${request.title}
+Understanding the core concepts and principles is essential for success. This section covers:
+- Basic terminology and definitions
+- Industry standards and regulations
+- Safety requirements and protocols
+- Equipment specifications and capabilities
 
-### Section 2: Practical Application
-Hands-on experience and real-world examples help solidify learning.
+### Section 2: Practical Implementation
+Learn how to apply your knowledge in real-world situations:
+- Step-by-step procedures and workflows
+- Common challenges and solutions
+- Quality control measures
+- Performance monitoring and evaluation
 
-### Section 3: Best Practices
-Industry best practices and proven methodologies for optimal results.
+### Section 3: Safety and Risk Management
+Critical safety considerations for ${request.title}:
+- Hazard identification and assessment
+- Risk mitigation strategies
+- Emergency response procedures
+- Incident reporting and investigation
+
+## Assessment and Evaluation
+- **Knowledge Tests**: Written assessments to verify understanding
+- **Practical Demonstrations**: Hands-on competency evaluations
+- **Continuous Monitoring**: Ongoing performance assessment
+- **Certification Requirements**: Meeting industry standards for qualification
 
 ## Summary
-This material provides a solid foundation for understanding ${request.title.toLowerCase()} and prepares students for practical application in their work environment.
+This comprehensive learning material provides the foundation for understanding ${request.title} in the construction industry. The content emphasizes safety, quality, and compliance while preparing you for practical application in your work environment.
 
 ${request.use_rag ? '*This content was generated using RAG (Retrieval-Augmented Generation) based on uploaded course documents and industry materials.*' : ''}`,
 
@@ -575,69 +614,133 @@ ${request.use_rag ? '*This content was generated using RAG (Retrieval-Augmented 
 
 ## Learning Objectives
 By the end of this lesson, students will be able to:
-- Understand the core concepts of ${request.title.toLowerCase()}
-- Apply practical skills in real-world scenarios
-- Demonstrate competency through assessments${ragContext}
+- Understand the fundamental principles of ${request.title}
+- Apply safety protocols and industry best practices
+- Demonstrate competency through practical assessments
+- Identify potential hazards and mitigation strategies
+- Follow proper procedures and quality standards${ragContext}
 
 ## Duration
-90 minutes
+2 hours (120 minutes)
+
+## Target Audience
+Construction industry professionals, safety personnel, and equipment operators
+
+## Prerequisites
+- Basic construction industry knowledge
+- Valid CSCS card (where applicable)
+- Completion of health and safety awareness training
 
 ## Materials Needed
 - Course materials and handouts
+- Personal Protective Equipment (PPE)
 - Practical demonstration equipment
-- Assessment tools
+- Assessment tools and checklists
+- Visual aids and diagrams
+- Safety data sheets and manuals
 ${request.use_rag ? '- Reference documents and source materials' : ''}
 
 ## Lesson Structure
 
-### Introduction (15 minutes)
-- Welcome and overview
-- Learning objectives
-- Pre-assessment
+### Introduction (20 minutes)
+- Welcome and introductions
+- Learning objectives overview
+- Pre-assessment quiz
+- Safety briefing and PPE requirements
+- Course outline and expectations
 
-### Main Content (60 minutes)
-- Core concepts presentation
-- Interactive demonstrations
-- Hands-on practice
-- Group discussions
+### Main Content (80 minutes)
 
-### Conclusion (15 minutes)
-- Key points summary
-- Q&A session
-- Next steps and assignments
+#### Part 1: Theory and Fundamentals (30 minutes)
+- Core concepts and principles of ${request.title}
+- Industry standards and regulations
+- Safety requirements and protocols
+- Equipment specifications and capabilities
 
-## Assessment
-- Practical demonstration
-- Knowledge check
-- Peer evaluation
+#### Part 2: Practical Demonstration (30 minutes)
+- Step-by-step procedure demonstration
+- Safety considerations and risk assessment
+- Common challenges and solutions
+- Quality control measures
 
-${request.use_rag ? '*This lesson plan was generated using RAG based on uploaded course documents.*' : ''}`,
+#### Part 3: Hands-on Practice (20 minutes)
+- Supervised practical exercises
+- Individual competency assessment
+- Peer observation and feedback
+- Problem-solving scenarios
+
+### Conclusion (20 minutes)
+- Key points summary and review
+- Q&A session and clarification
+- Assessment completion
+- Next steps and additional resources
+- Course evaluation and feedback
+
+## Assessment Methods
+- **Written Assessment**: 20-question multiple choice test
+- **Practical Demonstration**: Hands-on competency evaluation
+- **Peer Review**: Collaborative assessment activities
+- **Continuous Monitoring**: Ongoing performance observation
+
+## Safety Considerations
+- All participants must wear appropriate PPE
+- Emergency procedures and evacuation routes
+- First aid and emergency contact information
+- Incident reporting procedures
+
+## Resources and References
+- Industry safety standards and regulations
+- Equipment manuals and specifications
+- Best practice guidelines
+- Additional learning materials
+
+${request.use_rag ? '*This lesson plan was generated using RAG based on uploaded course documents and industry standards.*' : ''}`,
 
     test: `# Assessment: ${request.title}
 
 ## Instructions
-This assessment evaluates your understanding of ${request.title.toLowerCase()}. Read each question carefully and select the best answer.
+This assessment evaluates your understanding of ${request.title}. Read each question carefully and select the best answer.${ragContext}
 
 ## Question 1 (Multiple Choice)
-What is the most important aspect of ${request.title.toLowerCase()}?
-A) Speed
-B) Safety
-C) Cost
-D) Efficiency
+What is the primary purpose of ${request.title}?
+A) To increase production speed
+B) To ensure safety and compliance with industry standards
+C) To reduce operational costs
+D) To improve team coordination
 
-**Correct Answer: B) Safety**
+**Correct Answer: B) To ensure safety and compliance with industry standards**
 
-## Question 2 (True/False)
-Following established procedures is optional in ${request.title.toLowerCase()}.
+## Question 2 (Multiple Choice)
+Which of the following is most critical when performing ${request.title}?
+A) Working as quickly as possible
+B) Following established safety protocols
+C) Minimizing equipment usage
+D) Reducing documentation time
+
+**Correct Answer: B) Following established safety protocols**
+
+## Question 3 (True/False)
+Proper training and certification are required before performing ${request.title}.
 - True
 - False
 
-**Correct Answer: False**
+**Correct Answer: True**
 
-## Question 3 (Short Answer)
-Explain why quality control is important in ${request.title.toLowerCase()}.
+## Question 4 (Multiple Choice)
+What should you do if you encounter an unsafe condition during ${request.title}?
+A) Continue working to meet deadlines
+B) Report the condition immediately and stop work
+C) Try to fix it yourself
+D) Ignore it if it seems minor
 
-**Sample Answer**: Quality control ensures consistent results, reduces errors, and maintains high standards.`,
+**Correct Answer: B) Report the condition immediately and stop work**
+
+## Question 5 (Short Answer)
+Explain the importance of regular maintenance and inspection in ${request.title}.
+
+**Sample Answer**: Regular maintenance and inspection ensure equipment reliability, prevent accidents, maintain compliance with regulations, and extend equipment lifespan while protecting worker safety.
+
+${request.use_rag ? '*This assessment was generated using RAG based on uploaded course documents and industry standards.*' : ''}`,
 
     assessment: `# Assessment Rubric: ${request.title}
 

@@ -140,8 +140,9 @@ export default function StudentPortal() {
 
       if (coursesRes.ok) {
         const coursesData = await coursesRes.json();
-        setCourses(coursesData);
-        coursesCache.set('my-courses', coursesData);
+        // Ensure data is an array to prevent reduce errors
+        setCourses(Array.isArray(coursesData) ? coursesData : []);
+        coursesCache.set('my-courses', Array.isArray(coursesData) ? coursesData : []);
       }
 
       if (sessionsRes.ok) {
@@ -1120,7 +1121,7 @@ export default function StudentPortal() {
                 <div className="space-y-4">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-blue-600">
-                      {Math.round(courses.reduce((acc, course) => acc + course.progress_percentage, 0) / courses.length)}%
+                      {courses.length > 0 ? Math.round(courses.reduce((acc, course) => acc + (course.progress_percentage || 0), 0) / courses.length) : 0}%
                     </div>
                     <div className="text-sm text-gray-600">Overall Progress</div>
                   </div>

@@ -233,6 +233,64 @@ export default function handler(req, res) {
     return res.status(200).json([])
   }
 
+  // Mock course content endpoints
+  if (pathname.startsWith('/api/courses/') && pathname.includes('/content') && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  // Mock available students endpoint
+  if (pathname.startsWith('/api/courses/') && pathname.endsWith('/available-students') && req.method === 'GET') {
+    return res.status(200).json([])
+  }
+
+  // Mock course creation endpoint
+  if (pathname === '/api/courses/' && req.method === 'POST') {
+    return res.status(201).json({ id: Date.now(), message: 'Course created successfully' })
+  }
+
+  // Mock instructor AI upload endpoint
+  if (pathname === '/api/instructor-ai/upload-document' && req.method === 'POST') {
+    return res.status(200).json({ message: 'Document uploaded successfully' })
+  }
+
+  // Mock course access endpoints
+  if (pathname.includes('/grant-access') && req.method === 'POST') {
+    return res.status(200).json({ message: 'Access granted successfully' })
+  }
+
+  if (pathname.includes('/revoke-access') && req.method === 'POST') {
+    return res.status(200).json({ message: 'Access revoked successfully' })
+  }
+
+  // Mock test creation endpoint
+  if (pathname.includes('/create-test') && req.method === 'POST') {
+    return res.status(200).json({ message: 'Test created successfully' })
+  }
+
+  // Mock content tweak endpoint
+  if (pathname.includes('/tweak') && req.method === 'POST') {
+    return res.status(200).json({ message: 'Content tweaked successfully' })
+  }
+
+  // Mock generated content endpoint
+  if (pathname.includes('/generated-content') && req.method === 'GET') {
+    return res.status(200).json({ content: 'Generated content here' })
+  }
+
+  // Mock course publish endpoint
+  if (pathname.includes('/publish') && req.method === 'POST') {
+    return res.status(200).json({ message: 'Course published successfully' })
+  }
+
+  // Mock notifications stream endpoint
+  if (pathname === '/api/messaging/notifications/stream' && req.method === 'GET') {
+    // Return proper EventStream response
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    return res.status(200).send('data: {"connected": true}\n\n');
+  }
+
   // Default response
   res.status(404).json({ detail: 'Not found' })
 }

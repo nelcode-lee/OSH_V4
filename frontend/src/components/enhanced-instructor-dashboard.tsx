@@ -158,9 +158,9 @@ export default function EnhancedInstructorDashboard() {
     setStudents([
       {
         id: 1,
-        email: "john.doe@example.com",
-        first_name: "John",
-        last_name: "Doe",
+        email: "ahmed.hassan@example.com",
+        first_name: "Ahmed",
+        last_name: "Hassan",
         cscs_card_number: "CSCS123456",
         is_active: true,
         progress: 75,
@@ -169,14 +169,80 @@ export default function EnhancedInstructorDashboard() {
       },
       {
         id: 2,
-        email: "jane.smith@example.com",
-        first_name: "Jane",
-        last_name: "Smith",
+        email: "priya.patel@example.com",
+        first_name: "Priya",
+        last_name: "Patel",
         cscs_card_number: "CSCS789012",
         is_active: true,
         progress: 90,
         last_login: "1 hour ago",
         enrolled_date: "2024-01-10"
+      },
+      {
+        id: 3,
+        email: "maria.rodriguez@example.com",
+        first_name: "Maria",
+        last_name: "Rodriguez",
+        cscs_card_number: "CSCS456789",
+        is_active: true,
+        progress: 88,
+        last_login: "3 hours ago",
+        enrolled_date: "2024-01-12"
+      },
+      {
+        id: 4,
+        email: "chen.wei@example.com",
+        first_name: "Chen",
+        last_name: "Wei",
+        cscs_card_number: "CSCS567890",
+        is_active: true,
+        progress: 95,
+        last_login: "30 minutes ago",
+        enrolled_date: "2024-01-08"
+      },
+      {
+        id: 5,
+        email: "fatima.al-zahra@example.com",
+        first_name: "Fatima",
+        last_name: "Al-Zahra",
+        cscs_card_number: "CSCS678901",
+        is_active: true,
+        progress: 67,
+        last_login: "5 hours ago",
+        enrolled_date: "2024-01-20"
+      },
+      {
+        id: 6,
+        email: "kwame.asante@example.com",
+        first_name: "Kwame",
+        last_name: "Asante",
+        cscs_card_number: "CSCS789012",
+        is_active: true,
+        progress: 78,
+        last_login: "1 day ago",
+        enrolled_date: "2024-01-18"
+      },
+      {
+        id: 7,
+        email: "yuki.tanaka@example.com",
+        first_name: "Yuki",
+        last_name: "Tanaka",
+        cscs_card_number: "CSCS890123",
+        is_active: true,
+        progress: 92,
+        last_login: "2 hours ago",
+        enrolled_date: "2024-01-14"
+      },
+      {
+        id: 8,
+        email: "carlos.mendez@example.com",
+        first_name: "Carlos",
+        last_name: "Mendez",
+        cscs_card_number: "CSCS234561",
+        is_active: true,
+        progress: 89,
+        last_login: "1 hour ago",
+        enrolled_date: "2024-01-11"
       }
     ]);
 
@@ -186,18 +252,18 @@ export default function EnhancedInstructorDashboard() {
         id: 1,
         type: 'enrollment',
         title: 'New Student Enrollment',
-        description: 'John Doe enrolled in Plant Training & Testing',
+        description: 'Ahmed Hassan enrolled in Plant Training & Testing',
         timestamp: '2 hours ago',
-        user: 'John Doe',
+        user: 'Ahmed Hassan',
         course: 'Plant Training & Testing'
       },
       {
         id: 2,
         type: 'completion',
         title: 'Course Completed',
-        description: 'Jane Smith completed Health & Safety Short Course',
+        description: 'Priya Patel completed Health & Safety Short Course',
         timestamp: '4 hours ago',
-        user: 'Jane Smith',
+        user: 'Priya Patel',
         course: 'Health & Safety Short Course'
       },
       {
@@ -206,6 +272,24 @@ export default function EnhancedInstructorDashboard() {
         title: 'Content Uploaded',
         description: 'New PDF uploaded to GPS Training Advanced',
         timestamp: '1 day ago',
+        course: 'GPS Training Advanced'
+      },
+      {
+        id: 4,
+        type: 'completion',
+        title: 'Course Completed',
+        description: 'Chen Wei achieved perfect score on H&S test',
+        timestamp: '30 minutes ago',
+        user: 'Chen Wei',
+        course: 'Health & Safety Short Course'
+      },
+      {
+        id: 5,
+        type: 'enrollment',
+        title: 'New Student Enrollment',
+        description: 'Fatima Al-Zahra enrolled in GPS Training Advanced',
+        timestamp: '5 hours ago',
+        user: 'Fatima Al-Zahra',
         course: 'GPS Training Advanced'
       }
     ]);

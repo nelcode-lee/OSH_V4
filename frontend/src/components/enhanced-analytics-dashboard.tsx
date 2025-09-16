@@ -147,27 +147,43 @@ export default function EnhancedAnalyticsDashboard() {
     setTopPerformers([
       {
         id: 1,
-        name: "John Doe",
-        courses: 4,
-        score: 94,
+        name: "Nadia Ahmed",
+        courses: 3,
+        score: 95,
         certificates: 3,
-        lastActivity: "2 hours ago"
+        lastActivity: "30 minutes ago"
       },
       {
         id: 2,
-        name: "Jane Smith",
+        name: "Chen Wei",
         courses: 3,
-        score: 91,
+        score: 96,
         certificates: 2,
-        lastActivity: "1 hour ago"
+        lastActivity: "30 minutes ago"
       },
       {
         id: 3,
-        name: "Mike Wilson",
+        name: "Yuki Tanaka",
         courses: 2,
-        score: 88,
+        score: 93,
+        certificates: 2,
+        lastActivity: "2 hours ago"
+      },
+      {
+        id: 4,
+        name: "Carlos Mendez",
+        courses: 4,
+        score: 90,
+        certificates: 3,
+        lastActivity: "1 hour ago"
+      },
+      {
+        id: 5,
+        name: "Priya Patel",
+        courses: 2,
+        score: 94,
         certificates: 1,
-        lastActivity: "4 hours ago"
+        lastActivity: "1 hour ago"
       }
     ]);
   }, []);
@@ -477,7 +493,7 @@ export default function EnhancedAnalyticsDashboard() {
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">John Doe completed Plant Training & Testing</p>
+                <p className="text-sm text-gray-900">Ahmed Hassan completed Plant Training & Testing</p>
                 <p className="text-xs text-gray-500">2 hours ago</p>
               </div>
               <Badge className="bg-green-100 text-green-800">Completed</Badge>
@@ -485,7 +501,7 @@ export default function EnhancedAnalyticsDashboard() {
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">Jane Smith enrolled in GPS Training Advanced</p>
+                <p className="text-sm text-gray-900">Fatima Al-Zahra enrolled in GPS Training Advanced</p>
                 <p className="text-xs text-gray-500">4 hours ago</p>
               </div>
               <Badge className="bg-blue-100 text-blue-800">Enrolled</Badge>
@@ -493,7 +509,7 @@ export default function EnhancedAnalyticsDashboard() {
             <div className="flex items-center space-x-3">
               <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
               <div className="flex-1">
-                <p className="text-sm text-gray-900">Mike Wilson submitted H&S assessment</p>
+                <p className="text-sm text-gray-900">Maria Rodriguez submitted H&S assessment</p>
                 <p className="text-xs text-gray-500">6 hours ago</p>
               </div>
               <Badge className="bg-yellow-100 text-yellow-800">Submitted</Badge>

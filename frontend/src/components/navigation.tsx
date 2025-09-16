@@ -177,15 +177,12 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
                 <Button
                   variant="ghost"
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-1 p-2"
                 >
                   <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                     <User className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-sm font-medium">
-                    {user?.profile?.first_name || user?.email}
-                  </span>
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-4 h-4 text-gray-600" />
                 </Button>
 
                 {/* User Dropdown Menu */}
@@ -289,7 +286,7 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
               <div className="pt-4 border-t">
                 {isAuthenticated ? (
                   <div className="space-y-2">
-                    <div className="px-3 py-2">
+                    <div className="px-3 py-2 border-b">
                       <p className="text-sm font-medium text-gray-900">
                         {user?.profile?.first_name} {user?.profile?.last_name}
                       </p>

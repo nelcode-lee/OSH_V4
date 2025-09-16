@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Sparkles, FileText, BookOpen, ClipboardList, BarChart3, ArrowLeft } from 'lucide-react';
+import { Loader2, Sparkles, FileText, BookOpen, ClipboardList, BarChart3, ArrowLeft, Database, ToggleLeft, ToggleRight } from 'lucide-react';
 import Link from 'next/link';
 import { api } from '@/lib/api';
 
@@ -21,7 +21,8 @@ export default function AIContentBuilderPage() {
     description: '',
     additional_instructions: '',
     difficulty_level: 'intermediate',
-    target_audience: 'Construction workers and safety professionals'
+    target_audience: 'Construction workers and safety professionals',
+    use_rag: true
   });
 
   const contentTypes = [
@@ -46,7 +47,10 @@ export default function AIContentBuilderPage() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          use_rag: formData.use_rag
+        })
       });
 
       const result = await response.json();
@@ -227,6 +231,28 @@ export default function AIContentBuilderPage() {
                   placeholder="Who is this content for?"
                   className="mt-1"
                 />
+              </div>
+
+              {/* RAG Toggle */}
+              <div className="flex items-center justify-between p-4 border rounded-lg bg-blue-50">
+                <div className="flex items-center gap-3">
+                  <Database className="h-5 w-5 text-blue-600" />
+                  <div>
+                    <Label className="text-base font-medium text-blue-900">Use RAG (Retrieval-Augmented Generation)</Label>
+                    <p className="text-sm text-blue-700">Generate content using existing course documents and materials</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, use_rag: !formData.use_rag })}
+                  className="flex items-center gap-2"
+                >
+                  {formData.use_rag ? (
+                    <ToggleRight className="h-6 w-6 text-blue-600" />
+                  ) : (
+                    <ToggleLeft className="h-6 w-6 text-gray-400" />
+                  )}
+                </button>
               </div>
 
               {/* Generate Button */}

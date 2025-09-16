@@ -20,21 +20,23 @@ dbService.initializeDatabase().then(initialized => {
   dbInitialized = false;
 });
 
-export default function handler(req, res) {
-  // Get OpenAI API key from environment
-  const openaiApiKey = process.env.OPENAI_API_KEY;
-  // Enable CORS
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization')
+export default async function handler(req, res) {
+  try {
+    // Get OpenAI API key from environment
+    const openaiApiKey = process.env.OPENAI_API_KEY;
+    // Enable CORS
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+    res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization')
 
-  if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    return
-  }
+    if (req.method === 'OPTIONS') {
+      res.status(200).end()
+      return
+    }
 
-  const { pathname } = new URL(req.url, `http://${req.headers.host}`)
+    const { pathname } = new URL(req.url, `http://${req.headers.host}`)
+    console.log('API Request:', req.method, pathname);
   
   // Health check
   if (pathname === '/health' || pathname === '/api/health') {
@@ -505,6 +507,15 @@ export default function handler(req, res) {
 
   // Default response
   res.status(404).json({ detail: 'Not found' })
+  
+  } catch (error) {
+    console.error('API Handler Error:', error.message);
+    console.error('API Error Stack:', error.stack);
+    res.status(500).json({ 
+      detail: 'Internal server error',
+      error: error.message 
+    });
+  }
 }
 
 // Helper functions for AI content generation

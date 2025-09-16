@@ -584,4 +584,3 @@ function generateMockAIWorkflow(action, data) {
       return { message: 'AI workflow completed successfully' };
   }
 }
-}

@@ -1,6 +1,13 @@
 {
   "version": 2,
+  "name": "operator-skills-hub-v4-unique",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://operator-skills-hub.vercel.app"
+    "NEXT_PUBLIC_API_URL": "@next_public_api_url"
   }
 }

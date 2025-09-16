@@ -14,7 +14,7 @@ export default function handler(req, res) {
   const { pathname } = new URL(req.url, `http://${req.headers.host}`)
   
   // Health check
-  if (pathname === '/health') {
+  if (pathname === '/health' || pathname === '/api/health') {
     return res.status(200).json({ status: 'healthy', version: '1.0.0' })
   }
 

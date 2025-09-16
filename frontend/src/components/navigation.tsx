@@ -113,7 +113,7 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-18 min-h-[4.5rem]">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
@@ -124,8 +124,30 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-1">
+          {/* Medium Screen Navigation (shows only key items) */}
+          <nav className="hidden md:flex lg:hidden space-x-1">
+            {navigationItems.slice(0, 4).map((item) => {
+              const Icon = item.icon;
+              const isActive = currentPath === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-teal-100 text-teal-700 shadow-sm'
+                      : 'text-slate-700 hover:text-teal-700 hover:bg-slate-50 hover:shadow-sm'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 mr-2" />
+                  <span className="whitespace-nowrap">{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* Large Screen Navigation (shows all items) */}
+          <nav className="hidden lg:flex space-x-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentPath === item.href;
@@ -133,14 +155,14 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-teal-100 text-teal-700'
-                      : 'text-slate-700 hover:text-teal-700 hover:bg-slate-50'
+                      ? 'bg-teal-100 text-teal-700 shadow-sm'
+                      : 'text-slate-700 hover:text-teal-700 hover:bg-slate-50 hover:shadow-sm'
                   }`}
                 >
-                  <Icon className="w-4 h-4 mr-2" />
-                  {item.label}
+                  <Icon className="w-4 h-4 mr-2.5" />
+                  <span className="whitespace-nowrap">{item.label}</span>
                 </Link>
               );
             })}
@@ -228,7 +250,7 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
               variant="ghost"
               size="sm"
@@ -241,8 +263,8 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+          <div className="lg:hidden">
+            <div className="px-4 pt-4 pb-6 space-y-2 sm:px-6 bg-white border-t">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = currentPath === item.href;
@@ -250,14 +272,14 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    className={`flex items-center px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
                       isActive
-                        ? 'bg-teal-100 text-teal-700'
-                        : 'text-slate-700 hover:text-teal-700 hover:bg-slate-50'
+                        ? 'bg-teal-100 text-teal-700 shadow-sm'
+                        : 'text-slate-700 hover:text-teal-700 hover:bg-slate-50 hover:shadow-sm'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Icon className="w-5 h-5 mr-3" />
+                    <Icon className="w-5 h-5 mr-4" />
                     {item.label}
                   </Link>
                 );

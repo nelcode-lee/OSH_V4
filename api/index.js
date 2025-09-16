@@ -20,7 +20,18 @@ export default function handler(req, res) {
 
   // Mock authentication
   if (pathname === '/api/auth/login' && req.method === 'POST') {
-    const { username, password } = req.body
+    let username, password;
+    
+    // Handle both JSON and form-encoded data
+    if (req.headers['content-type'] === 'application/json') {
+      ({ username, password } = req.body);
+    } else if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+      const body = req.body;
+      username = body.username;
+      password = body.password;
+    } else {
+      return res.status(400).json({ detail: 'Invalid content type' });
+    }
     
     // Demo credentials
     const demoUsers = {

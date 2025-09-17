@@ -21,7 +21,6 @@ import {
   File,
   Image,
   FileImage,
-  FilePdf,
   FileVideo,
   Loader2,
   Sparkles
@@ -63,7 +62,7 @@ export default function DocumentUploadArea({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const acceptedFileTypes = {
-    'application/pdf': { icon: FilePdf, color: 'text-red-600', bg: 'bg-red-50' },
+    'application/pdf': { icon: FileText, color: 'text-red-600', bg: 'bg-red-50' },
     'image/jpeg': { icon: Image, color: 'text-green-600', bg: 'bg-green-50' },
     'image/png': { icon: Image, color: 'text-green-600', bg: 'bg-green-50' },
     'image/gif': { icon: Image, color: 'text-green-600', bg: 'bg-green-50' },

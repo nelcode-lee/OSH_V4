@@ -29,10 +29,13 @@ import {
   Target,
   Award,
   Calendar,
-  Archive
+  Archive,
+  File,
+  FolderOpen
 } from 'lucide-react';
 import { api, getAuthHeaders } from '@/lib/api';
 import Link from 'next/link';
+import DocumentUploadArea from '@/components/document-upload-area';
 
 interface Course {
   id: number;
@@ -59,6 +62,7 @@ export default function CourseManagementPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCourses, setSelectedCourses] = useState<number[]>([]);
   const [showBulkActions, setShowBulkActions] = useState(false);
+  const [activeTab, setActiveTab] = useState<'courses' | 'documents'>('courses');
 
   useEffect(() => {
     loadCourses();
@@ -207,8 +211,51 @@ export default function CourseManagementPage() {
             </div>
           </div>
 
-          {/* Bulk Actions Panel */}
-          {showBulkActions && (
+          {/* Tab Navigation */}
+          <div className="mb-6">
+            <div className="border-b border-gray-200">
+              <nav className="-mb-px flex space-x-8">
+                <button
+                  onClick={() => setActiveTab('courses')}
+                  className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === 'courses'
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <BookOpen className="h-4 w-4" />
+                    <span>Courses</span>
+                    <Badge variant="secondary" className="ml-2">
+                      {courses.length}
+                    </Badge>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setActiveTab('documents')}
+                  className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === 'documents'
+                      ? 'border-blue-500 text-blue-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <FolderOpen className="h-4 w-4" />
+                    <span>Company Documents</span>
+                    <Badge variant="secondary" className="ml-2 bg-green-100 text-green-800">
+                      RAG Ready
+                    </Badge>
+                  </div>
+                </button>
+              </nav>
+            </div>
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'courses' && (
+            <>
+              {/* Bulk Actions Panel */}
+              {showBulkActions && (
             <Card className="mb-6 bg-blue-50 border-blue-200">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
@@ -519,6 +566,22 @@ export default function CourseManagementPage() {
                 </p>
               </CardContent>
             </Card>
+          )}
+            </>
+          )}
+
+          {/* Documents Tab */}
+          {activeTab === 'documents' && (
+            <DocumentUploadArea 
+              onDocumentUploaded={(document) => {
+                console.log('Document uploaded:', document);
+                // You can add additional logic here, like refreshing a document list
+              }}
+              onDocumentProcessed={(document) => {
+                console.log('Document processed for RAG:', document);
+                // You can add additional logic here, like showing a success message
+              }}
+            />
           )}
         </div>
       </div>

@@ -1,6 +1,63 @@
 // API with Neon DB integration
 const dbService = require('./db-service');
 
+// Helper function to parse multipart form data
+async function parseMultipartForm(req) {
+  return new Promise((resolve, reject) => {
+    const formData = {};
+    let body = '';
+    
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    
+    req.on('end', () => {
+      // Simple parsing for demonstration - in production use a proper multipart parser
+      const lines = body.split('\r\n');
+      let currentField = null;
+      let currentValue = '';
+      
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        
+        if (line.includes('Content-Disposition: form-data')) {
+          if (currentField) {
+            formData[currentField] = currentValue.trim();
+          }
+          
+          const fieldMatch = line.match(/name="([^"]+)"/);
+          if (fieldMatch) {
+            currentField = fieldMatch[1];
+            currentValue = '';
+          }
+        } else if (line === '' && currentField) {
+          // Empty line indicates start of field value
+          continue;
+        } else if (currentField && line !== '--' && !line.includes('Content-Type')) {
+          currentValue += line + '\n';
+        }
+      }
+      
+      if (currentField) {
+        formData[currentField] = currentValue.trim();
+      }
+      
+      // Mock file data
+      if (formData.file) {
+        formData.file = {
+          filename: 'document.pdf',
+          size: 1024000,
+          mimetype: 'application/pdf'
+        };
+      }
+      
+      resolve(formData);
+    });
+    
+    req.on('error', reject);
+  });
+}
+
 // Add error handling for missing dependencies
 try {
   const bcrypt = require('bcryptjs');
@@ -592,7 +649,38 @@ export default async function handler(req, res) {
 
   // Mock instructor AI upload endpoint
   if (pathname === '/api/instructor-ai/upload-document' && req.method === 'POST') {
-    return res.status(200).json({ message: 'Document uploaded successfully' })
+    // Parse multipart form data
+    const formData = await parseMultipartForm(req);
+    
+    const documentId = Date.now();
+    const mockDocument = {
+      id: documentId,
+      title: formData.title || 'Uploaded Document',
+      description: formData.description || '',
+      file_name: formData.file?.filename || 'document.pdf',
+      file_size: formData.file?.size || 1024000,
+      file_type: formData.file?.mimetype || 'application/pdf',
+      status: 'ready',
+      progress: 100,
+      created_at: new Date().toISOString(),
+      course_id: formData.course_id ? parseInt(formData.course_id) : null,
+      document_id: documentId,
+      message: 'Document uploaded and processed successfully for RAG'
+    };
+
+    return res.status(200).json(mockDocument);
+  }
+
+  // Mock document processing endpoint for RAG
+  if (pathname.includes('/api/content/documents/') && pathname.includes('/process') && req.method === 'POST') {
+    const documentId = pathname.split('/')[4];
+    return res.status(200).json({
+      id: parseInt(documentId),
+      status: 'processed',
+      message: 'Document processed successfully for RAG',
+      chunks_created: 15,
+      processing_time: '2.3s'
+    });
   }
 
   // Mock course access endpoints

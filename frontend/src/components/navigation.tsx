@@ -20,7 +20,8 @@ import {
   Calendar,
   MessageSquare,
   Sparkles,
-  Plus
+  Plus,
+  ClipboardList
 } from 'lucide-react';
 import { api, getAuthHeaders } from '@/lib/api';
 import { User as UserType } from '@/types/user';
@@ -93,6 +94,7 @@ export default function Navigation({ currentPath = '/' }: NavigationProps) {
         { href: '/course-management', label: 'Manage Courses', icon: HardHat },
         { href: '/course-creation', label: 'Create Course', icon: Plus },
         { href: '/ai-content-builder', label: 'AI Content Builder', icon: Sparkles },
+        { href: '/observations', label: 'Observations', icon: ClipboardList },
         { href: '/students', label: 'Students', icon: Users },
         { href: '/analytics', label: 'Analytics', icon: BarChart3 },
         { href: '/schedule', label: 'Schedule', icon: Calendar },

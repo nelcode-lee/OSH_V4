@@ -357,12 +357,12 @@ export default function ObservationForm({
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {observationCriteria.reduce((acc, criteria) => {
+            {Object.entries(observationCriteria.reduce((acc, criteria) => {
               const category = criteria.category;
               if (!acc[category]) acc[category] = [];
               acc[category].push(criteria);
               return acc;
-            }, {} as Record<string, ObservationCriteria[]>).map(([category, criteriaList]) => (
+            }, {} as Record<string, ObservationCriteria[]>)).map(([category, criteriaList]) => (
               <div key={category} className="space-y-4">
                 <h4 className="text-lg font-semibold text-gray-900 border-b pb-2">{category}</h4>
                 <div className="space-y-3">

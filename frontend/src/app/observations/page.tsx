@@ -29,7 +29,7 @@ import {
   FileText,
   BarChart3,
   Users,
-  Equipment
+  Wrench
 } from 'lucide-react';
 import { api, getAuthHeaders } from '@/lib/api';
 
@@ -202,7 +202,7 @@ export default function ObservationsPage() {
   };
 
   const getEquipmentIcon = (equipment: string) => {
-    return <Equipment className="h-5 w-5 text-blue-600" />;
+    return <Wrench className="h-5 w-5 text-blue-600" />;
   };
 
   const filteredObservations = observations.filter(obs => {

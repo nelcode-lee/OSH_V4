@@ -225,16 +225,16 @@ export default function DocumentUploadArea({
     setDocuments(prev => prev.filter(doc => doc.id !== documentId));
   };
 
-  const handleViewDocument = (document: Document) => {
+  const handleViewDocument = (doc: Document) => {
     // In a real app, this would open the document viewer
-    window.open(`/api/documents/${document.id}/view`, '_blank');
+    window.open(`/api/documents/${doc.id}/view`, '_blank');
   };
 
-  const handleDownloadDocument = (document: Document) => {
+  const handleDownloadDocument = (doc: Document) => {
     // In a real app, this would download the document
     const link = document.createElement('a');
-    link.href = `/api/documents/${document.id}/download`;
-    link.download = document.file_name;
+    link.href = `/api/documents/${doc.id}/download`;
+    link.download = doc.file_name;
     link.click();
   };
 
